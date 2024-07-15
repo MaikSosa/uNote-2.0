@@ -148,3 +148,13 @@ footer {
 
     padding: 60px;
 }
+
+#sessionIdInput {
+    width: 300px;
+    height: 40px;
+    padding: 10px;
+    font-size: 18px;
+    margin-right: 10px;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+}
