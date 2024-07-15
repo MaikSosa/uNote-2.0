@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>uNote</title>
+        <link rel="stylesheet" href="styles\main.css">
+        <link rel="icon" href="favicon.png" type="image/png">
+    </head>
+    <body>
+        <header class="Icon">
+            <nav>
+                <a href="index.html"><h1>uNote</h1></a>
+            </nav>
+        </header>
+        <div class="main-content">
+            <button onclick="createSession()">Create Session</button>
+            <a href="join-session.html">Join Session</a>
+        </div>
+        <footer>
+            <a href="aboutus.html">About Us</a>
+        </footer>
+        <script>
+            function createSession() {
+                const randomId = Math.random().toString(36).substring(2, 15);
+                window.location.href = 'main.html?session=' + randomId;
+            }
+        </script>
+    </body>
+</html>

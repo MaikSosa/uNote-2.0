@@ -1,0 +1,191 @@
+body {
+    background-color: rgb(88, 88, 88);
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+}
+
+html {
+    height: 0;
+    scrollbar-width: none;
+    overflow-x: hidden;
+}
+
+/* START OF NAVBAR CSS */
+
+header {
+    color: beige;
+    font-size: 30px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    width: 100%;
+    height: 70px;
+    background-color: rgb(23,23,23);
+    display: flex;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000; 
+    transition: height 0.3s ease; 
+}
+
+#toggle-button {
+    background: none;
+    border: none;
+    color: beige;
+    font-size: 30px;
+    cursor: pointer;
+    padding: 10px;
+    position: absolute;
+    left: 10px;
+    z-index: 1001; 
+}
+
+nav {
+    width: 100%;
+    display: flex;
+    justify-content: center; 
+    transition: opacity 0.3s ease, visibility 0.3s ease; 
+    z-index: 999; 
+}
+
+.collapsed {
+    height: 43px;
+    overflow: hidden; 
+}
+
+.collapsed nav {
+    opacity: 0; 
+    visibility: hidden; 
+    pointer-events: none; 
+}
+
+a, button {
+    text-decoration: none;
+    color: beige;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 25px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 1;
+}
+
+/* END OF NAVBAR CSS */
+
+nav h2 {
+    font-size: 20px;
+    padding: 15px;
+    padding-top: 25px;
+    position: absolute;
+    left: 60px;
+}
+
+/* START OF OPTIONS CSS */
+
+#options-bar {
+    padding: 10px;
+    width: 100%;
+    height: 35px;
+    background-color: beige;
+    position: fixed;
+    top: 70px;
+    left: 0px;
+    transition: top 0.3s ease;  
+    z-index: 9999;
+}
+
+#toolbar {
+    /* background-color: white; */
+    border: 0px;
+}
+
+#editor {
+    height: 10in;
+    width: 8.5in;
+    background-color: white;
+    margin: 150px auto;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+@media print {
+    body, html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        background: none;
+        transform: none;
+    }
+    #editor {
+        margin-top: 0px;
+        background: #FFF;
+    }
+    * {
+        margin: 0;
+        padding: 0;
+        background: lightcoral;
+    }
+    .page {
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+}
+
+button#saveBtn, button#uploadBtn {
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    background-color: #f3f3f3;
+    border: 1px solid #d3d3d3;
+    padding: 2px 6px;
+    font-family: sans-serif;
+    font-size: medium;
+    cursor: pointer;
+    outline: none;
+    color: black;
+}
+
+.custom-hyperlink {
+    text-decoration: underline;
+    color: blue;
+    font-weight: normal;
+    font-family: initial;
+    font-size: initial;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: initial;
+}
+
+.dropdown {
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0px;
+    background-color: #f3f3f3;
+}
+
+header.collapsed {
+    height: 43px; /* Adjust according to how thin you want the black line */
+    transition: height 0.3s ease;
+}
+
+.collapsed nav {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.3s ease, visibility 0s ease 0.3s; /* Delays visibility change to after opacity transition */
+}
+
+header.collapsed + #options-bar {
+    top: 44px; /* Adjust this value based on the collapsed height of your header */
+}

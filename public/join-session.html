@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>uNote</title>
+        <link rel="stylesheet" href="styles/main.css">
+        <link rel="icon" href="favicon.png" type="image/png">
+    </head>
+    <body>
+        <header class="Icon">
+            <nav>
+                <a href="index.html"><h1>uNote</h1></a>
+            </nav>
+        </header>
+        <div class="main-content">
+            <form id="joinSessionForm" action="main.html" method="GET">
+                <input type="text" id="sessionIdInput" name="session" placeholder="Enter Session ID" required>
+                <button type="submit">Join Session</button> 
+            </form>
+        </div>
+        <footer>
+            <a href="aboutus.html">About Us</a>
+        </footer>
+        <script>
+            function createSession() {
+                const randomId = Math.random().toString(36).substring(2, 15);
+                window.location.href = 'main.html?session=' + randomId;
+            }
+        </script>
+    </body>
+</html>
+
+
+
+
+
+
+
+
+<script>
+    var form = document.getElementById('joinSessionForm');
+    form.onsubmit = function(event) {
+        // Optionally, you can add any additional logic here before submitting
+    };
+</script>
