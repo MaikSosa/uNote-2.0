@@ -2,7 +2,7 @@ const express = require('express');
 const http = require('http');
 const socketIo = require('socket.io');
 const path = require('path');
-const QuillDelta = require('quill-delta');  // Ensure you have this installed via npm
+const QuillDelta = require('quill-delta');
 
 const app = express();
 const server = http.createServer(app);

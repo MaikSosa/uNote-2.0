@@ -1,8 +1,9 @@
 {
   "name": "unote-2.0",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -12,6 +13,7 @@
   "dependencies": {
     "express": "^4.19.2",
     "quill-delta": "^5.1.0",
-    "socket.io": "^4.7.5"
+    "socket.io": "^4.7.5",
+    "path": "^0.12.7"
   }
 }
