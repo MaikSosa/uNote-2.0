@@ -2,14 +2,24 @@ const express = require('express');
 const http = require('http');
 const socketIo = require('socket.io');
 const path = require('path');
+const { MongoClient } = require('mongodb');
 const QuillDelta = require('quill-delta');
-const Redis = require('ioredis');
 
 const app = express();
 const server = http.createServer(app);
 const io = socketIo(server);
 
-const redis = new Redis(process.env.REDIS_URL);
+// MongoDB connection
+const uri = process.env.MONGODB_URI;
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+let collection;
+
+client.connect(err => {
+    if (err) throw err;
+    const db = client.db('u-note-2-0'); // Replace with your DB name
+    collection = db.collection('documents'); // Replace with your collection name
+    console.log("Connected to MongoDB");
+});
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -20,18 +30,25 @@ app.get('*', (req, res) => {
 io.on('connection', (socket) => {
     socket.on('join-session', async (sessionId) => {
         socket.join(sessionId);
-        const sessionData = await redis.get(sessionId);
-        const document = sessionData ? JSON.parse(sessionData) : new QuillDelta();
-        socket.emit('load-document', document);
+        const doc = await collection.findOne({ sessionId: sessionId });
+        if (doc) {
+            socket.emit('load-document', doc.content);
+        } else {
+            const newDoc = { sessionId: sessionId, content: new QuillDelta() };
+            await collection.insertOne(newDoc);
+            socket.emit('load-document', newDoc.content);
+        }
     });
 
     socket.on('text-change', async (data) => {
         const { sessionId, change } = data;
-        const sessionData = await redis.get(sessionId);
-        let document = sessionData ? new QuillDelta(JSON.parse(sessionData)) : new QuillDelta();
-        document = document.compose(new QuillDelta(change));
-        await redis.set(sessionId, JSON.stringify(document));
-        socket.to(sessionId).emit('receive-change', change);
+        const doc = await collection.findOne({ sessionId: sessionId });
+        if (doc) {
+            const newDelta = new QuillDelta(change);
+            doc.content = doc.content.compose(newDelta);
+            await collection.updateOne({ sessionId: sessionId }, { $set: { content: doc.content } });
+            socket.to(sessionId).emit('receive-change', change);
+        }
     });
 });
 

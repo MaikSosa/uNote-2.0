@@ -13,6 +13,7 @@
   "dependencies": {
     "express": "^4.19.2",
     "ioredis": "^5.4.1",
+    "mongodb": "^6.8.0",
     "path": "^0.12.7",
     "quill-delta": "^5.1.0",
     "socket.io": "^4.7.5"
