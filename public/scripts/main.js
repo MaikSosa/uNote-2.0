@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     var urlParams = new URLSearchParams(window.location.search);
     var sessionId = urlParams.get('session');
-    document.getElementById('session-id').textContent = sessionId; // Set the session ID in the HTML
+    document.getElementById('session-id').textContent = sessionId;
 
     socket.emit('join-session', sessionId);
 
@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     socket.on('load-document', function(documentState) {
-        quill.setContents(documentState, 'silent'); // Set the contents without triggering the 'text-change' event
+        quill.setContents(documentState, 'silent');
     });
 
     quill.on('text-change', function(delta, oldDelta, source) {
