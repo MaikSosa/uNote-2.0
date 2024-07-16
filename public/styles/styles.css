@@ -189,3 +189,87 @@ header.collapsed {
 header.collapsed + #options-bar {
     top: 44px; /* Adjust this value based on the collapsed height of your header */
 }
+
+/* Add any additional styling here */
+
+#chat-box {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    width: 300px;
+    border: 1px solid #ccc;
+    background-color: #f5f5dc; /* Beige color for chatbox */
+    display: flex;
+    flex-direction: column;
+    height: 400px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    z-index: 1000;
+}
+
+#chat-header {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    cursor: move;
+    border-radius: 8px 8px 0 0;
+    text-align: center;
+}
+
+#chat-editor {
+    flex: 1;
+    background-color: #333;
+    color: #ffffff;
+    overflow-y: auto;
+}
+
+#chat-input, #username-input {
+    display: flex;
+    padding: 10px;
+    background-color: #1f1f1f;
+    border-top: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+#chat-input input, #username-input input {
+    flex: 1;
+    padding: 5px;
+    border: 1px solid #555;
+    margin-right: 5px;
+    border-radius: 3px;
+    background-color: #333;
+    color: #ffffff;
+    height: 30px;
+}
+
+#chat-input button, #username-input button {
+    padding: 5px;
+    border: 1px solid #555;
+    background-color: #007bff;
+    color: #ffffff;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: background-color 0.3s;
+    height: 30px;
+    width: 30px;
+}
+
+#chat-input button::before {
+    font-size: 12px;
+    color: white;
+}
+
+#chat-input button:hover, #username-input button:hover {
+    background-color: #0056b3;
+}
+
+.ql-editor .message {
+    padding: 5px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    display: block;
+}
+
+button#set-username-button, button#send-button{
+    padding: 20px;
+}

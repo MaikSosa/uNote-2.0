@@ -37,6 +37,20 @@
     <div id="editor">
         <!-- Quill editor -->
     </div>
+    <div id="chat-box">
+        <div id="chat-header">
+            <span>Chat</span>
+        </div>
+        <div id="chat-editor"></div>
+        <div id="username-input">
+            <input type="text" id="username" placeholder="Enter your username">
+            <button id="set-username-button"></button>
+        </div>
+        <div id="chat-input" style="display: none;">
+            <input type="text" id="message-input" placeholder="Type a message">
+            <button id="send-button"></button>
+        </div>
+    </div>
     <footer></footer>
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
     <script src="/socket.io/socket.io.js"></script>

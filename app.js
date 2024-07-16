@@ -8,8 +8,9 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIo(server);
 
-// Store document content in memory
+// Store document content and chat messages in memory
 const documents = {};
+const chatMessages = {};
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -31,6 +32,10 @@ io.on('connection', (socket) => {
             documents[sessionId] = new QuillDelta().ops;
             socket.emit('load-document', documents[sessionId]);
         }
+
+        // Load existing chat messages for the session
+        const chat = chatMessages[sessionId] || new QuillDelta().ops;
+        socket.emit('load-chat', chat);
     });
 
     socket.on('text-change', (data) => {
@@ -43,10 +48,25 @@ io.on('connection', (socket) => {
             const newDelta = new QuillDelta(change);
             const updatedContent = new QuillDelta(doc).compose(newDelta);
             documents[sessionId] = updatedContent.ops;
-            
+
             // Broadcast the change to other clients in the session
             socket.to(sessionId).emit('receive-change', change);
         }
+    });
+
+    socket.on('send-message', (data) => {
+        const { sessionId, change } = data;
+
+        // Store the message
+        if (!chatMessages[sessionId]) {
+            chatMessages[sessionId] = new QuillDelta().ops;
+        }
+
+        const updatedContent = new QuillDelta(chatMessages[sessionId]).compose(change);
+        chatMessages[sessionId] = updatedContent.ops;
+
+        // Broadcast the message to other clients in the session
+        io.to(sessionId).emit('receive-message', { sessionId, change });
     });
 });
 
