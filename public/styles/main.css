@@ -130,6 +130,7 @@ footer {
     top: 0;
     right: 0;
 
+
     margin: 70px 0px 40px 0px;
     
 }
@@ -144,7 +145,7 @@ footer {
     align-items: center;
 
     height: 400px; /* Adjust the height as needed */
-    border: 1px solid #000;
+    border: 1px;
 
     padding: 60px;
 }
