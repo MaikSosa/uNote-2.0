@@ -3,47 +3,37 @@ const http = require('http');
 const socketIo = require('socket.io');
 const path = require('path');
 const QuillDelta = require('quill-delta');
+const Redis = require('ioredis');
 
 const app = express();
 const server = http.createServer(app);
 const io = socketIo(server);
 
-const sessions = {};
+const redis = new Redis(process.env.REDIS_URL);
 
-// Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Serve the main HTML file for all routes
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 io.on('connection', (socket) => {
-    socket.on('join-session', (sessionId) => {
+    socket.on('join-session', async (sessionId) => {
         socket.join(sessionId);
-        if (sessions[sessionId]) {
-            socket.emit('load-document', sessions[sessionId].currentDocument);
-        } else {
-            sessions[sessionId] = { currentDocument: new QuillDelta() };
-            socket.emit('load-document', sessions[sessionId].currentDocument);
-        }
+        const sessionData = await redis.get(sessionId);
+        const document = sessionData ? JSON.parse(sessionData) : new QuillDelta();
+        socket.emit('load-document', document);
     });
 
-    socket.on('text-change', (data) => {
+    socket.on('text-change', async (data) => {
         const { sessionId, change } = data;
-        if (!sessions[sessionId]) {
-            sessions[sessionId] = { currentDocument: new QuillDelta() };
-        }
-        applyDelta(sessions[sessionId].currentDocument, change);
+        const sessionData = await redis.get(sessionId);
+        let document = sessionData ? new QuillDelta(JSON.parse(sessionData)) : new QuillDelta();
+        document = document.compose(new QuillDelta(change));
+        await redis.set(sessionId, JSON.stringify(document));
         socket.to(sessionId).emit('receive-change', change);
     });
 });
-
-function applyDelta(doc, delta) {
-    let newDelta = new QuillDelta(delta.ops);
-    let combinedDelta = doc.compose(newDelta);
-    doc.ops = combinedDelta.ops;
-}
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
