@@ -147,6 +147,7 @@ a:focus, a:hover, a:visited, a:link, a:active {
     margin: 120px 20px 30px; /* Add a 30px margin at the bottom */
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     overflow: hidden;
+    padding: 0.75in;
 }
 
 
