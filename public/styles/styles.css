@@ -6,7 +6,7 @@ body {
     flex-direction: column;
     height: 100vh;
     margin: 0;
-    padding-top: 70px; /* Adjust according to header height */
+    padding-top: 70px;
 }
 
 html {
@@ -26,11 +26,14 @@ header {
     background-color: rgb(23,23,23);
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
     position: fixed;
     top: 0;
     left: 0;
     z-index: 1000; 
-    transition: height 0.3s ease; 
+    transition: height 0.3s ease;
+    box-sizing: border-box;
 }
 
 #toggle-button {
@@ -40,28 +43,34 @@ header {
     font-size: 30px;
     cursor: pointer;
     padding: 10px;
-    position: absolute;
-    left: 10px;
     z-index: 1001; 
 }
 
 nav {
-    width: 100%;
     display: flex;
-    justify-content: center; 
+    justify-content: space-between; 
+    align-items: center;
+    width: 100%;
     transition: opacity 0.3s ease, visibility 0.3s ease; 
     z-index: 999; 
 }
 
-.collapsed {
-    height: 43px;
-    overflow: hidden; 
+nav h1, nav h2 {
+    font-size: 23px;
+    padding: 15px;
+    padding-top: 20px;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.collapsed nav {
-    opacity: 0; 
-    visibility: hidden; 
-    pointer-events: none; 
+nav h1 {
+    margin-left: auto;
+}
+
+nav h2 {
+    margin-right: auto;
 }
 
 a, button {
@@ -76,12 +85,26 @@ a, button {
     z-index: 1;
 }
 
-nav h2 {
-    font-size: 20px;
-    padding: 15px;
-    padding-top: 25px;
-    position: absolute;
-    left: 60px;
+a:focus, a:hover, a:visited, a:link, a:active {
+    text-decoration: none;
+    color: beige;
+}
+
+.collapsed {
+    height: 43px;
+    overflow: hidden; 
+}
+
+.collapsed nav {
+    opacity: 0; 
+    visibility: hidden; 
+    pointer-events: none; 
+}
+
+@media (max-width: 600px) {
+    nav h2 {
+        font-size: 16px;
+    }
 }
 
 /* END OF NAVBAR CSS */
@@ -91,17 +114,29 @@ nav h2 {
 #options-bar {
     padding: 10px;
     width: 100%;
-    height: 35px;
     background-color: beige;
     position: fixed;
     top: 70px;
     left: 0px;
     transition: top 0.3s ease;  
     z-index: 9999;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px; /* Space between buttons */
+    box-sizing: border-box;
 }
 
 #toolbar {
     border: 0px;
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#toolbar > * {
+    flex: 0 0 auto;
+    min-width: 30px; /* Minimum button width */
 }
 
 #editor {
@@ -109,10 +144,11 @@ nav h2 {
     width: calc(100% - 40px);
     max-width: 8.5in;
     background-color: white;
-    margin: 150px 20px 0;
+    margin: 120px 20px 30px; /* Add a 30px margin at the bottom */
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     overflow: hidden;
 }
+
 
 @media print {
     body, html {
@@ -181,13 +217,6 @@ button#saveBtn, button#uploadBtn {
 header.collapsed {
     height: 43px; 
     transition: height 0.3s ease;
-}
-
-.collapsed nav {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transition: opacity 0.3s ease, visibility 0s ease 0.3s; 
 }
 
 header.collapsed + #options-bar {
@@ -277,3 +306,4 @@ header.collapsed + #options-bar {
 button#set-username-button, button#send-button {
     padding: 20px;
 }
+
