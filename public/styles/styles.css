@@ -308,3 +308,43 @@ button#set-username-button, button#send-button {
     padding: 20px;
 }
 
+/* Add download button styles */
+#download-buttons {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+#download-button {
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+#download-button:hover {
+    background-color: #0056b3;
+}
+
+.download-option {
+    display: none;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+    margin-top: 5px;
+    transition: background-color 0.3s;
+}
+
+.download-option:hover {
+    background-color: #0056b3;
+}

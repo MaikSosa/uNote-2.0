@@ -41,15 +41,15 @@ io.on('connection', (socket) => {
     socket.on('text-change', (data) => {
         const { sessionId, change } = data;
 
-        // Find the document for this session
+        // Finds Doc
         const doc = documents[sessionId];
         if (doc) {
-            // Apply the change to the document content
+            // Doc Updates
             const newDelta = new QuillDelta(change);
             const updatedContent = new QuillDelta(doc).compose(newDelta);
             documents[sessionId] = updatedContent.ops;
 
-            // Broadcast the change to other clients in the session
+            // Doc Updates
             socket.to(sessionId).emit('receive-change', change);
         }
     });
@@ -57,7 +57,7 @@ io.on('connection', (socket) => {
     socket.on('send-message', (data) => {
         const { sessionId, change } = data;
 
-        // Store the message
+        // Stores message
         if (!chatMessages[sessionId]) {
             chatMessages[sessionId] = new QuillDelta().ops;
         }
@@ -65,7 +65,7 @@ io.on('connection', (socket) => {
         const updatedContent = new QuillDelta(chatMessages[sessionId]).compose(change);
         chatMessages[sessionId] = updatedContent.ops;
 
-        // Broadcast the message to other clients in the session
+        // Sends Message
         io.to(sessionId).emit('receive-message', { sessionId, change });
     });
 });

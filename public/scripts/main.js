@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     socket.on('load-chat', function(chatState) {
         chatQuill.setContents(chatState, 'silent');
-        chatQuill.root.scrollTop = chatQuill.root.scrollHeight; // Scroll to the bottom after loading
+        chatQuill.root.scrollTop = chatQuill.root.scrollHeight;
     });
 
     quill.on('text-change', function(delta, oldDelta, source) {
@@ -72,5 +72,47 @@ document.addEventListener('DOMContentLoaded', function() {
             chatQuill.root.scrollTop = chatQuill.root.scrollHeight; // Scroll to the bottom after receiving a message
         }
     });
-});
 
+    // Download button functionality
+    var downloadButton = document.getElementById('download-button');
+    var downloadTxtButton = document.getElementById('download-txt-button');
+    var downloadPdfButton = document.getElementById('download-pdf-button');
+
+    downloadButton.addEventListener('click', function() {
+        downloadTxtButton.style.display = 'block';
+        downloadPdfButton.style.display = 'block';
+    });
+
+    downloadTxtButton.addEventListener('click', function() {
+        downloadContent('txt');
+    });
+
+    downloadPdfButton.addEventListener('click', function() {
+        downloadContent('pdf');
+    });
+
+    function downloadContent(format) {
+        var editorContent = quill.getText();
+        var blob, url, a;
+        switch (format) {
+            case 'txt':
+                blob = new Blob([editorContent], { type: 'text/plain' });
+                url = URL.createObjectURL(blob);
+                a = document.createElement('a');
+                a.href = url;
+                a.download = 'document.txt';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                break;
+            case 'pdf':
+                // Use jsPDF to generate PDF file
+                const { jsPDF } = window.jspdf;
+                var doc = new jsPDF();
+                doc.text(editorContent, 10, 10);
+                doc.save('document.pdf');
+                break;
+        }
+    }
+});
