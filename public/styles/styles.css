@@ -3,11 +3,14 @@ body {
     display: flex;
     align-items: center; 
     justify-content: center;
+    flex-direction: column;
+    height: 100vh;
+    margin: 0;
+    padding-top: 70px; /* Adjust according to header height */
 }
 
 html {
-    height: 0;
-    scrollbar-width: none;
+    height: 100%;
     overflow-x: hidden;
 }
 
@@ -73,8 +76,6 @@ a, button {
     z-index: 1;
 }
 
-/* END OF NAVBAR CSS */
-
 nav h2 {
     font-size: 20px;
     padding: 15px;
@@ -82,6 +83,8 @@ nav h2 {
     position: absolute;
     left: 60px;
 }
+
+/* END OF NAVBAR CSS */
 
 /* START OF OPTIONS CSS */
 
@@ -98,16 +101,17 @@ nav h2 {
 }
 
 #toolbar {
-    /* background-color: white; */
     border: 0px;
 }
 
 #editor {
-    height: 10in;
-    width: 8.5in;
+    flex: 1;
+    width: calc(100% - 40px);
+    max-width: 8.5in;
     background-color: white;
-    margin: 150px auto;
+    margin: 150px 20px 0;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    overflow: hidden;
 }
 
 @media print {
@@ -175,7 +179,7 @@ button#saveBtn, button#uploadBtn {
 }
 
 header.collapsed {
-    height: 43px; /* Adjust according to how thin you want the black line */
+    height: 43px; 
     transition: height 0.3s ease;
 }
 
@@ -183,25 +187,25 @@ header.collapsed {
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
-    transition: opacity 0.3s ease, visibility 0s ease 0.3s; /* Delays visibility change to after opacity transition */
+    transition: opacity 0.3s ease, visibility 0s ease 0.3s; 
 }
 
 header.collapsed + #options-bar {
-    top: 44px; /* Adjust this value based on the collapsed height of your header */
+    top: 44px; 
 }
-
-/* Add any additional styling here */
 
 #chat-box {
     position: fixed;
     bottom: 10px;
     right: 10px;
-    width: 300px;
+    width: calc(100% - 20px);
+    max-width: 300px;
     border: 1px solid #ccc;
-    background-color: #f5f5dc; /* Beige color for chatbox */
+    background-color: #f5f5dc; 
     display: flex;
     flex-direction: column;
-    height: 400px;
+    height: calc(50% - 20px);
+    max-height: 400px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     border-radius: 8px;
     z-index: 1000;
@@ -228,7 +232,7 @@ header.collapsed + #options-bar {
     padding: 10px;
     background-color: #1f1f1f;
     border-top: 1px solid #ccc;
-    border-radius: 8px;
+    border-radius: 0 0 8px 8px;
 }
 
 #chat-input input, #username-input input {
@@ -270,6 +274,6 @@ header.collapsed + #options-bar {
     display: block;
 }
 
-button#set-username-button, button#send-button{
+button#set-username-button, button#send-button {
     padding: 20px;
 }
